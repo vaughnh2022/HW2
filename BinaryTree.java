@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION HERE ***
+ * *** Vaughn Hartzell 001 ***
  *
  * Homework # 2 (Programming Assignment). This Java class defines a few basic
  * manipulation operations of a binary trees.
@@ -11,6 +11,8 @@
 
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Stack;
 
 /*
  * Class BinaryTree
@@ -221,10 +223,17 @@ public class BinaryTree {
      */
 
     private void replaceValueHelper(Node node, int oldVal, int newVal) {
-
         // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
         // BINARY TREE (WHICH IS BASED ON RECURSION)
-
+        if(node.data==oldVal){
+            node.data=newVal;
+        }
+        if(node.left!=null){
+            replaceValueHelper(node.left, oldVal, newVal);
+        }
+        if(node.right!=null){
+            replaceValueHelper(node.right, oldVal, newVal);
+        }
     }
 
 
@@ -241,13 +250,26 @@ public class BinaryTree {
      * Depth first search of the tree is based on recursion. This will result
      * in very few lines of code.
      */
-
     private int findMinHelper(Node node) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        return Integer.MAX_VALUE;
+        Integer returnMin=Integer.MAX_VALUE;
+        if(node==null){
+            return returnMin;
+        }
+        Stack<Node> sta = new Stack<>();
+        sta.push(node);
+        while(!sta.isEmpty()){
+            Node cursor = sta.pop();
+            if(cursor.data<returnMin){
+                returnMin=cursor.data;
+            }
+            if(cursor.right!=null){
+                sta.push(cursor.right);
+            }
+            if(cursor.left!=null){
+                sta.push(cursor.left);
+            }
+        }
+        return returnMin;
     }
 
 
@@ -265,14 +287,25 @@ public class BinaryTree {
      */
 
     private int nodesGTHelper(Node node, int val) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        // return -1; // RECALL, IF TREE IS EMPTY, RETURN -1
-
-
-        return -1;
+        int returnNum=-1;
+        if(node==null){
+            return returnNum;
+        }
+        Stack<Node> sta = new Stack<>();
+        sta.push(node);
+        while(!sta.isEmpty()){
+            Node cursor = sta.pop();
+            if(cursor.data>val){
+                returnNum++;
+            }
+            if(cursor.right!=null){
+                sta.push(cursor.right);
+            }
+            if(cursor.left!=null){
+                sta.push(cursor.left);
+            }
+        }
+        return returnNum+1;
     }
 
 
@@ -303,14 +336,23 @@ public class BinaryTree {
     }
 
     private int[] averageHelper(Node n) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        // RECALL, IF THE TREE IS EMPTY, RETURN 0 FOR BOTH THE SUM AND
-        // COUNT LOCATIONS IN THE RETURNED ARRAY AS SHOWN BELOW, ELSE
-        // THE 'SUM' IS RETURNED IN INDEX LOCATION 0, AND COUNT IS LOCATION 1
-
-        return new int[]{0, 0};
+        int[] returnArr={0,0};
+        if(n==null){
+            return returnArr;
+        }
+        Stack<Node> sta = new Stack<>();
+        sta.push(n);
+        while(!sta.isEmpty()){
+            Node cursor = sta.pop();
+            returnArr[0]+=cursor.data;
+            returnArr[1]++;
+            if(cursor.right!=null){
+                sta.push(cursor.right);
+            }
+            if(cursor.left!=null){
+                sta.push(cursor.left);
+            }
+        }
+        return returnArr;
     }
 }
